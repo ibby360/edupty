@@ -10,7 +10,7 @@ class OrderField(models.PositiveIntegerField):
     def pre_save(self, model_instance, add):
         if getattr(model_instance, self.attname) is None:
             try:
-                qs = self.model.objets.all()
+                qs = self.model.objects.all()
                 if self.for_fields:
                     # firter by objects with the same field velue for field in for_fields
                     query = {field: getattr(model_instance, field)
