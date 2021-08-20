@@ -1,0 +1,50 @@
+{% extends 'admin-base.html' %}
+{% load static %}
+{% block content %}
+
+        <!-- Courses Admin Start -->
+        <div class="section overflow-hidden position-relative" id="wrapper">
+
+            <!-- Sidebar Wrapper Start -->
+            {% include 'includes/sidebar.html' %}
+            <!-- Sidebar Wrapper End -->
+
+
+            <div class="page-content-wrapper">
+                <div class="container">
+                    <h2 class="pb-5">Create a New Course</h2>
+                    <div class="card shadow w-auto mx-auto corner">
+                        <div class="card-body form-wrapper">
+                            <h4 class="card-title">Course Info</h4>
+                            <form class="" action="" method="POST">
+                                {% csrf_token %}
+                                <div class="col-12 courses-select">
+                                    {{ form.subject }}
+                                </div>
+
+                                <div class="col-12 single-form">
+                                    <label class="visually-hidden" for="inlineFormInputGroupUsername">Title</label>
+                                    {{form.title}}
+                                </div>
+
+                                <div class="col-12 single-form">
+                                    <label class="visually-hidden" for="inlineFormSelectPref">Slug</label>
+                                    {{ form.slug }}
+                                </div>
+
+                                <div class="col-12 single-form">
+                                    {{ form.overview }}
+                                </div>
+
+                                <div class="col-12 pt-3">
+                                    <button type="submit" class="btn btn-primary btn-hover-dark">Submit</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+{% endblock content %}
