@@ -1,10 +1,15 @@
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
+from django.forms import formsets
+from django.forms.widgets import Select
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.shortcuts import render, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic.base import TemplateResponseMixin, View
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
+from courses.forms import CourseCreateForm, ModuleFormSet
 from courses.models import Course
-from courses.forms import CourseCreateForm
 
 # Create your views here.
 
@@ -44,6 +49,32 @@ class CourseUpdateView(OwnerCourseEditMixin, UpdateView):
 
 
 
-class CourseDeleteView(DeleteView):
+class CourseDeleteView(OwnerCourseMixin, DeleteView):
     template_name = "courses/manage/course/delete.html"
     permission_required = 'courses.delete_course'
+
+class CourseModuleUpdateView(TemplateResponseMixin, View):
+    """ 
+    Handle the formset to add, update and delete modules for
+    a specific course
+    """
+    template_name = 'courses/manage/module/module-formset.html'
+    course = None
+
+    def get_formset(self, data=None):
+        return ModuleFormSet (instance=self.course, data=data)
+
+    def dispatch(self, request, slug):
+        self.course = get_object_or_404(Course, slug=slug, owner=request.user)
+        return super().dispatch(request, slug)
+
+    def get(self, request, *args, **kwargs):
+        formset = self.get_formset()
+        return self.render_to_response({'course': self.course, 'formset': formset})
+
+    def post(self, request, *args, **kwargs):
+        formset = self.get_formset()
+        if formset.is_valid():
+            formset.save()
+            return redirect('manage_course_list')
+        return self.render_to_response({'course': self.course, 'formset': formset})
