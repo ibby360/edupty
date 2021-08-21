@@ -1,0 +1,27 @@
+{% extends 'admin-base.html' %}
+{% block title %}Delete course{% endblock %}
+
+
+{% block content %}
+        <!-- Courses Admin Start -->
+        <div class="section overflow-hidden position-relative" id="wrapper">
+
+            <!-- Sidebar Wrapper Start -->
+            {% include 'includes/sidebar.html' %}
+            <!-- Sidebar Wrapper End -->
+            <div class="page-content-wrapper">
+                <div class="container">
+                    <h1>Delete course "{{ object.title }}"</h1>
+                    <div class="card shadow ">
+                        <div class="card-body text-center">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <p>Are you sure you want to delete '{{ object }}'? All of the objects and their related items will be deleted.</p>
+                                <input type="submit" value="Confirm" class="btn btn-success btn-hover-dark">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
