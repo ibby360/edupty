@@ -41,7 +41,7 @@
                                 <li><button data-bs-toggle="tab" data-bs-target="#tab3"><i class="icofont-eye-blocked"></i></button></li>
                             </ul>
                             <div class="tab-btn">
-                                <a href="#" class="btn btn-primary btn-hover-dark">New Course</a>
+                                <a href="{% url 'course_create' %}" class="btn btn-primary btn-hover-dark">New Course</a>
                             </div>
                         </div>
                     </div>
@@ -92,14 +92,15 @@
                                             </span>
                                         </div>
 
-                                        <div class="courses-select">
-                                            <select>
-                                                <option data-display="This Month">This Month</option>
-                                                <option value="1">This Year</option>
-                                                <option value="2">This Week</option>
-                                            </select>
+                                        <div class="dropdown content-box ms-n2 me-4">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                              Action
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                              <li><a class="dropdown-item" href="{% url 'course_edit' course.slug %}">Edit</a></li>
+                                              <li><a class="dropdown-item" href="{% url 'course_delete' course.slug %}">Delete</a></li>
+                                            </ul>
                                         </div>
-
                                     </div>
                                 </div>
                                 <!-- Courses Item End -->
@@ -223,5 +224,5 @@
 
         </div>
         <!-- Courses Admin End -->
-
+        
 {% endblock content %}
