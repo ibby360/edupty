@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.contenttypes import fields
 from django.forms import widgets
-from courses.models import Course, Subject
+from django.forms.models import inlineformset_factory
+from courses.models import Course, Module
 
 class CourseCreateForm(forms.ModelForm):
     class Meta:
@@ -14,3 +15,7 @@ class CourseCreateForm(forms.ModelForm):
         self.fields['slug'].widget.attrs['placeholder'] = 'Course Slug*'
         self.fields['overview'].widget.attrs['placeholder'] = 'Course Overview*'
    
+
+ModuleFormSet = inlineformset_factory(Course, Module, fields=['title', 'description'],
+                                      extra=2, can_delete=True
+                                      )
