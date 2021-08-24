@@ -29,7 +29,7 @@
                                     </div>
                                     <ul id="modules">
                                         {% for module in course.modules.all %}
-                                        <li class="active bg-info mb-2 p-3 text-white rounded-2 hover" data-id="{{ module.id }}">
+                                        <li id="modules-2" class="active bg-info mb-2 p-3 text-white rounded-2 hover" data-id="{{ module.id }}">
                                             <a href="{% url "module_content_list" module.id %}">
                                                 <span>
                                                     Module <span class="order">{{ module.order|add:1 }}</span>
@@ -51,7 +51,7 @@
 
                         <div class="col-md-8 my-2">
                             <div class="card shadow">
-                                <div class="card-body">
+                                <div class="card-body" id="module_contents">
                                     <div class="card-title">
                                         <h4>Module {{ module.order|add:1 }}: {{ module.title }}</h4>
                                         <p>Module Contents</p>
@@ -59,12 +59,12 @@
                                     {% for content in module.contents.all %}
                                     <div class="contents" data-id={{ content.id }}>
                                         {% with item=content.item %}
-                                        <ul>
-                                            <li class="active bg-info p-3 text-white rounded-2">
+                                        <ul id="module-contents">
+                                            <li class="active bg-info p-3 text-white rounded-2 mt-2">
                                                 {{ item }} ({{ item|model_name }})
                                                 <div class="d-flex justify-content-start pt-2">
                                                     <a href="{% url "module_content_update" module.id item|model_name item.id %}" class="c-btn btn-link me-3">Edit</a>
-                                                    <form action="{% url 'module_content_delete" content.id' %}" method="POST">
+                                                    <form action="{% url 'module_content_delete' content.id %}" method="POST">
                                                         {% csrf_token %}
                                                         <input type="submit" value="Delete" class="c-btn btn-link">
                                                     </form>
@@ -81,96 +81,135 @@
                         </div>
                     </div>
 
-                                        <!-- Courses Resources Start -->
-                                        <div class="courses-resources">
-                                            <h4 class="title">Add New Contents.</h4>
-
-                                            <!-- Resources Wrapper Start -->
-                                            <div class="resources-wrapper">
-                                                <div class="row row-cols-xl-6 row-cols-md-3 row-cols-2 d-flex justify-content-between">
-                                                    <div class="col">
-
-                                                        <!-- Single Resources Start -->
-                                                        <div class="single-resources">
-                                                            <div class="resources-icon">
-                                                                <a href="{% url "module_content_create" module.id "video" %}">
-                                                                    <img src="{% static 'images/resources-icon/icon-1-1.png' %}"
-                                                                        alt="Icon">
-                                                                    <img class="hover"
-                                                                        src="{% static 'images/resources-icon/icon-2-1.png' %}"
-                                                                        alt="Icon">
-                                                                </a>
-                                                            </div>
-                                                            <h5 class="title"><a href="{% url "module_content_create" module.id "video" %}">Video</a></h5>
-                                                        </div>
-                                                        <!-- Single Resources Start -->
-
-                                                    </div>
-                                                    <div class="col">
-
-                                                        <!-- Single Resources Start -->
-                                                        <div class="single-resources">
-                                                            <div class="resources-icon">
-                                                                <a href="{% url "module_content_create" module.id "image" %}">
-                                                                    <img src="{% static 'images/resources-icon/icon-1-5.png' %}"
-                                                                        alt="Icon">
-                                                                    <img class="hover"
-                                                                        src="{% static 'images/resources-icon/icon-2-5.png' %}"
-                                                                        alt="Icon">
-                                                                </a>
-                                                            </div>
-                                                            <h5 class="title"><a href="{% url "module_content_create" module.id "image" %}">Image</a></h5>
-                                                        </div>
-                                                        <!-- Single Resources Start -->
-
-                                                    </div>
-                                                    <div class="col">
-
-                                                        <!-- Single Resources Start -->
-                                                        <div class="single-resources">
-                                                            <div class="resources-icon">
-                                                                <a href="{% url "module_content_create" module.id "text" %}">
-                                                                    <img src="{% static 'images/resources-icon/icon-1-3.png' %}"
-                                                                        alt="Icon">
-                                                                    <img class="hover"
-                                                                        src="{% static 'images/resources-icon/icon-2-3.png' %}"
-                                                                        alt="Icon">
-                                                                </a>
-                                                            </div>
-                                                            <h5 class="title"><a href="{% url "module_content_create" module.id "text" %}">Text</a></h5>
-                                                        </div>
-                                                        <!-- Single Resources Start -->
-
-                                                    </div>
-                                                    <div class="col">
-
-                                                        <!-- Single Resources Start -->
-                                                        <div class="single-resources">
-                                                            <div class="resources-icon">
-                                                                <a href="{% url "module_content_create" module.id "file" %}">
-                                                                    <img src="{% static 'images/resources-icon/icon-1-4.png' %}"
-                                                                        alt="Icon">
-                                                                    <img class="hover"
-                                                                        src="{% static 'images/resources-icon/icon-2-4.png' %}"
-                                                                        alt="Icon">
-                                                                </a>
-                                                            </div>
-                                                            <h5 class="title"><a href="{% url "module_content_create" module.id "file" %}">File</a></h5>
-                                                        </div>
-                                                        <!-- Single Resources Start -->
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Resources Wrapper End -->
-
+                    <!-- Courses Resources Start -->
+                    <div class="courses-resources">
+                        <h4 class="title">Add New Contents.</h4>
+                    
+                        <!-- Resources Wrapper Start -->
+                        <div class="resources-wrapper">
+                            <div class="row row-cols-xl-6 row-cols-md-3 row-cols-2 d-flex justify-content-between">
+                                <div class="col">
+                    
+                                    <!-- Single Resources Start -->
+                                    <div class="single-resources">
+                                        <div class="resources-icon">
+                                            <a href="{% url "module_content_create" module.id "video" %}">
+                                                <img src="{% static 'images/resources-icon/icon-1-1.png' %}" alt="Icon">
+                                                <img class="hover" src="{% static 'images/resources-icon/icon-2-1.png' %}" alt="Icon">
+                                            </a>
                                         </div>
-                                        <!-- Courses Resources End -->
+                                        <h5 class="title"><a href="{% url "module_content_create" module.id "video" %}">Video</a></h5>
+                                    </div>
+                                    <!-- Single Resources Start -->
+                    
+                                </div>
+                                <div class="col">
+                    
+                                    <!-- Single Resources Start -->
+                                    <div class="single-resources">
+                                        <div class="resources-icon">
+                                            <a href="{% url "module_content_create" module.id "image" %}">
+                                                <img src="{% static 'images/resources-icon/icon-1-5.png' %}" alt="Icon">
+                                                <img class="hover" src="{% static 'images/resources-icon/icon-2-5.png' %}" alt="Icon">
+                                            </a>
+                                        </div>
+                                        <h5 class="title"><a href="{% url "module_content_create" module.id "image" %}">Image</a></h5>
+                                    </div>
+                                    <!-- Single Resources Start -->
+                    
+                                </div>
+                                <div class="col">
+                    
+                                    <!-- Single Resources Start -->
+                                    <div class="single-resources">
+                                        <div class="resources-icon">
+                                            <a href="{% url "module_content_create" module.id "text" %}">
+                                                <img src="{% static 'images/resources-icon/icon-1-3.png' %}" alt="Icon">
+                                                <img class="hover" src="{% static 'images/resources-icon/icon-2-3.png' %}" alt="Icon">
+                                            </a>
+                                        </div>
+                                        <h5 class="title"><a href="{% url "module_content_create" module.id "text" %}">Text</a></h5>
+                                    </div>
+                                    <!-- Single Resources Start -->
+                    
+                                </div>
+                                <div class="col">
+                    
+                                    <!-- Single Resources Start -->
+                                    <div class="single-resources">
+                                        <div class="resources-icon">
+                                            <a href="{% url "module_content_create" module.id "file" %}">
+                                                <img src="{% static 'images/resources-icon/icon-1-4.png' %}" alt="Icon">
+                                                <img class="hover" src="{% static 'images/resources-icon/icon-2-4.png' %}" alt="Icon">
+                                            </a>
+                                        </div>
+                                        <h5 class="title"><a href="{% url "module_content_create" module.id "file" %}">File</a></h5>
+                                    </div>
+                                    <!-- Single Resources Start -->
+                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Resources Wrapper End -->
+                    
+                    </div>
+                    <!-- Courses Resources End -->
 
                 </div>  
                 {% endwith %}
             </div>
 
         </div>
+        
+        <!-- Sortable js -->
+        <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+        <script src="{% static 'js/vendor/jquery-3.5.1.min.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
 
+        <script>
+            // 
+            $('#modules').sortable({
+                stop: function(event, ui) {
+                    modules_order = {};
+                    $('#modules').children().each(function(){
+                        // update the order field
+                        $(this).find('.order').text($(this).index() + 1);
+                        // associate the module's id with its order
+                        modules_order[$(this).data('id')] = $(this).index();
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "module_order" %}',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        data: JSON.stringify(modules_order)
+                    });
+                }
+            });
+
+
+            $('#module_contents').sortable({
+                stop: function(event, ui) {
+                    contents_order = {};
+                    $('#module_contents').children().each(function(){
+                        // associate the module's id with its order
+                        contents_order[$(this).data('id')] = $(this).index();
+                    });
+                
+                       $.ajax({
+                        type: 'POST',
+                        url: '{% url "content_order" %}',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        data: JSON.stringify(contents_order),
+                    });
+                    
+                },
+                filter: '.card-title'
+            });
+
+            // Module Contents
+            // Sortable.create(module_contents, {filter: '.card-title',});
+        </script>
 {% endblock content %}
+
