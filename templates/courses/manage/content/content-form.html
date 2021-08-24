@@ -1,0 +1,54 @@
+{% extends 'admin-base.html' %}
+{% load static %}
+{% block title %}
+    {% if object %}
+        Edit content {{ object.title }}
+    {% else %}
+        Add new content
+    {% endif %}
+{% endblock title %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+        <!-- Courses Admin Start -->
+        <div class="section overflow-hidden position-relative" id="wrapper">
+
+            <!-- Sidebar Wrapper Start -->
+            {% include 'includes/sidebar.html' %}
+            <!-- Sidebar Wrapper End -->
+
+
+            <div class="page-content-wrapper">
+                <div class="container">
+                    {% if object %}
+                    <h2 class="pb-5">Edit Content {{ object.title }}</h2>
+                    {% else %}
+                    <h2 class="pb-5">Add New Content</h2>
+                    {% endif %}
+                    <div class="card shadow w-auto mx-auto corner">
+                        <div class="card-body form-wrapper">
+                            <h4 class="card-title">Content Info</h4>
+                            <form class="" action="" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="col-12 single-form">
+                                    <label class="form-label" for="Title">Title*</label>
+                                    {{ form.title }}
+                                </div>
+
+                                <div class="col-12 mt-3">
+                                    {% comment %} <label class="form-label" for="file">File*</label> {% endcomment %}
+                                    {{ form.file}}
+                                </div>
+
+                                <div class="col-12 pt-3">
+                                    <input type="submit" class="btn btn-primary btn-hover-dark" value="Save Content"></input>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+{% endblock content %}
