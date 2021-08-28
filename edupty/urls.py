@@ -11,6 +11,8 @@ urlpatterns = [
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
     path('course/', include('courses.urls')),
+    path('', views.HomeView.as_view(), name='home_view'),
+    path('subject/<slug:subject>/', views.HomeView.as_view(), name='course_list_subject')
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
