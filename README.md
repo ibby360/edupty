@@ -5,7 +5,7 @@
 > E-learning web application with content management system (CMS) for instructors and students. Instructors can create courses with various modules and students can enroll to them.
 
 ## Status
-In Development
+In Development 🚧 
 
 ## Requirements
 - Python 3+
