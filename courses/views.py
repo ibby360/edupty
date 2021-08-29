@@ -10,6 +10,7 @@ from django.views.generic.list import ListView
 from django.apps import apps
 from django.forms.models import modelform_factory
 from braces.views import JsonRequestResponseMixin, CsrfExemptMixin
+from django.views.generic.detail import DetailView
 
 
 from courses.forms import CourseCreateForm, ModuleFormSet
@@ -153,3 +154,8 @@ class ContentOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
                 .update(order=order)
 
         return self.render_json_response({'saved': 'OK'})
+
+
+class CourseDetailView(DetailView):
+    model = Course
+    template_name = 'courses/courses-details.html'
