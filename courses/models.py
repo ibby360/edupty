@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from courses.fields import OrderField
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -35,6 +36,10 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super(Course, self).save(*args, **kwargs)
 
 class Module(models.Model):
 

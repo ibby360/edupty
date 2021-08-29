@@ -7,12 +7,11 @@ from courses.models import Course, Module
 class CourseCreateForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ('subject', 'title', 'slug', 'overview', )
+        fields = ('subject', 'title', 'overview', )
 
     def __init__(self, *args, **kwargs):
         super(CourseCreateForm, self).__init__(*args, **kwargs)
         self.fields['title'].widget.attrs['placeholder'] = 'Course Title*'
-        self.fields['slug'].widget.attrs['placeholder'] = 'Course Slug*'
         self.fields['overview'].widget.attrs['placeholder'] = 'Course Overview*'
    
 
